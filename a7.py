@@ -74,6 +74,7 @@ class BayesClassifier:
             print(text)
             tokens = self.tokenize(text)
             print(tokens)
+            
         # we want to fill pos_freqs and neg_freqs with the correct counts of words from
         # their respective reviews
         
