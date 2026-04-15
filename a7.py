@@ -34,9 +34,9 @@ class BayesClassifier:
             print("Data files found - loading to use cached values...")
             self.pos_freqs = self.load_dict(self.pos_filename)
             self.neg_freqs = self.load_dict(self.neg_filename)
-        else:
-            print("Data files not found - running training...")
-            self.train()
+        # else:
+        #     print("Data files not found - running training...")
+        #     self.train()
 
     def train(self) -> None:
         """Trains the Naive Bayes Sentiment Classifier
@@ -143,6 +143,17 @@ class BayesClassifier:
         # running sums. when calculating the probabilities, always add 1 to the numerator
         # of each probability for add one smoothing (so that we never have a probability
         # of 0)
+        for token in tokens:
+            times_in_pos = 0
+            if token in self.pos_freqs:
+                times_in_pos += self.pos_freqs[token]
+            times_in_pos += 1
+            prob_pos += math.log(times_in_pos/total_pos_words)
+            times_in_neg = 0
+            if token in self.neg_freqs:
+                times_in_neg += self.neg_freqs[token]
+            times_in_neg += 1
+            prob_neg += math.log(times_in_neg/total_neg_words)
 
 
         # for debugging purposes, it may help to print the overall positive and negative
@@ -154,6 +165,11 @@ class BayesClassifier:
         
 
         # return a string of "positive" or "negative"
+
+        if prob_pos > prob_neg:
+            return "positive"
+        else:
+            return "negative"
 
     def load_file(self, filepath: str) -> str:
         """Loads text of given file
@@ -234,10 +250,9 @@ class BayesClassifier:
         """
         # TODO: your work here
         for word in words:
-            if word  in freqs:
-                if word in freqs:
+            if word in freqs:
                     freqs[word] += 1
-                else:
+            else:
                     freqs[word] = 1
 
 
@@ -262,33 +277,33 @@ if __name__ == "__main__":
     print(f"sum of positive word counts is: {pos_denominator}")
     print(f"sum of negative word counts is: {neg_denominator}")
 
-    # print("\nHere are some sample word counts in the positive and negative dicitionaries.")
-    # print(f"count for the word 'love' in positive dictionary {b.pos_freqs['love']}")
-    # print(f"count for the word 'love' in negative dictionary {b.neg_freqs['love']}")
-    # print(f"count for the word 'terrible' in positive dictionary {b.pos_freqs['terrible']}")
-    # print(f"count for the word 'terrible' in negative dictionary {b.neg_freqs['terrible']}")
-    # print(f"count for the word 'computer' in positive dictionary {b.pos_freqs['computer']}")
-    # print(f"count for the word 'computer' in negative dictionary {b.neg_freqs['computer']}")
-    # print(f"count for the word 'science' in positive dictionary {b.pos_freqs['science']}")
-    # print(f"count for the word 'science' in negative dictionary {b.neg_freqs['science']}")
-    # print(f"count for the word 'i' in positive dictionary {b.pos_freqs['i']}")
-    # print(f"count for the word 'i' in negative dictionary {b.neg_freqs['i']}")
-    # print(f"count for the word 'is' in positive dictionary {b.pos_freqs['is']}")
-    # print(f"count for the word 'is' in negative dictionary {b.neg_freqs['is']}")
-    # print(f"count for the word 'the' in positive dictionary {b.pos_freqs['the']}")
-    # print(f"count for the word 'the' in negative dictionary {b.neg_freqs['the']}")
+    print("\nHere are some sample word counts in the positive and negative dicitionaries.")
+    print(f"count for the word 'love' in positive dictionary {b.pos_freqs['love']}")
+    print(f"count for the word 'love' in negative dictionary {b.neg_freqs['love']}")
+    print(f"count for the word 'terrible' in positive dictionary {b.pos_freqs['terrible']}")
+    print(f"count for the word 'terrible' in negative dictionary {b.neg_freqs['terrible']}")
+    print(f"count for the word 'computer' in positive dictionary {b.pos_freqs['computer']}")
+    print(f"count for the word 'computer' in negative dictionary {b.neg_freqs['computer']}")
+    print(f"count for the word 'science' in positive dictionary {b.pos_freqs['science']}")
+    print(f"count for the word 'science' in negative dictionary {b.neg_freqs['science']}")
+    print(f"count for the word 'i' in positive dictionary {b.pos_freqs['i']}")
+    print(f"count for the word 'i' in negative dictionary {b.neg_freqs['i']}")
+    print(f"count for the word 'is' in positive dictionary {b.pos_freqs['is']}")
+    print(f"count for the word 'is' in negative dictionary {b.neg_freqs['is']}")
+    print(f"count for the word 'the' in positive dictionary {b.pos_freqs['the']}")
+    print(f"count for the word 'the' in negative dictionary {b.neg_freqs['the']}")
 
-    # print("\nHere are some sample probabilities.")
-    # print(f"P('love'| pos) {(b.pos_freqs['love']+1)/pos_denominator}")
-    # print(f"P('love'| neg) {(b.neg_freqs['love']+1)/neg_denominator}")
-    # print(f"P('terrible'| pos) {(b.pos_freqs['terrible']+1)/pos_denominator}")
-    # print(f"P('terrible'| neg) {(b.neg_freqs['terrible']+1)/neg_denominator}")
+    print("\nHere are some sample probabilities.")
+    print(f"P('love'| pos) {(b.pos_freqs['love']+1)/pos_denominator}")
+    print(f"P('love'| neg) {(b.neg_freqs['love']+1)/neg_denominator}")
+    print(f"P('terrible'| pos) {(b.pos_freqs['terrible']+1)/pos_denominator}")
+    print(f"P('terrible'| neg) {(b.neg_freqs['terrible']+1)/neg_denominator}")
 
     # # uncomment the below lines once you've implemented `classify`
-    # print("\nThe following should all be positive.")
-    # print(b.classify('I love computer science'))
-    # print(b.classify('this movie is fantastic'))
-    # print("\nThe following should all be negative.")
-    # print(b.classify('rainy days are the worst'))
-    # print(b.classify('computer science is terrible'))
+    print("\nThe following should all be positive.")
+    print(b.classify('I love computer science'))
+    print(b.classify('this movie is fantastic'))
+    print("\nThe following should all be negative.")
+    print(b.classify('rainy days are the worst'))
+    print(b.classify('computer science is terrible'))
     pass
