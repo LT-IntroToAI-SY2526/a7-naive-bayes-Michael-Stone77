@@ -34,9 +34,9 @@ class BayesClassifier:
             print("Data files found - loading to use cached values...")
             self.pos_freqs = self.load_dict(self.pos_filename)
             self.neg_freqs = self.load_dict(self.neg_filename)
-        # else:
-        #     print("Data files not found - running training...")
-        #     self.train()
+        else:
+            print("Data files not found - running training...")
+            self.train()
 
     def train(self) -> None:
         """Trains the Naive Bayes Sentiment Classifier
@@ -148,17 +148,17 @@ class BayesClassifier:
             if token in self.pos_freqs:
                 times_in_pos += self.pos_freqs[token]
             times_in_pos += 1
-            prob_pos += math.log(times_in_pos/total_pos_words)
+            pos_prob += math.log(times_in_pos/total_pos_words)
             times_in_neg = 0
             if token in self.neg_freqs:
                 times_in_neg += self.neg_freqs[token]
             times_in_neg += 1
-            prob_neg += math.log(times_in_neg/total_neg_words)
+            neg_prob += math.log(times_in_neg/total_neg_words)
 
 
         # for debugging purposes, it may help to print the overall positive and negative
         # probabilities
-        
+       
 
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
@@ -166,7 +166,7 @@ class BayesClassifier:
 
         # return a string of "positive" or "negative"
 
-        if prob_pos > prob_neg:
+        if pos_prob > neg_prob:
             return "positive"
         else:
             return "negative"
