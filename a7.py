@@ -158,8 +158,8 @@ class BayesClassifier:
 
         # for debugging purposes, it may help to print the overall positive and negative
         # probabilities
-       
-
+        print(f"Positive Proability: {pos_prob}")
+        print(f"Negative Proability: {neg_prob}")
         # determine whether positive or negative was more probable (i.e. which one was
         # larger)
         
@@ -306,4 +306,15 @@ if __name__ == "__main__":
     print("\nThe following should all be negative.")
     print(b.classify('rainy days are the worst'))
     print(b.classify('computer science is terrible'))
+    print("\nThe following should all be my examples for reflection.")
+    print(b.classify('Summer break is almost here.  I am super excited and I know that its going to be the best'))
+    print(b.classify('Im so excited for the new movie coming out'))
+    print(b.classify('I think I did really well on my recent test'))
+    print(b.classify('I am nervous that I wont do well on the AP tests.  I have studied, but I dont think Ill do that well'))
+    print(b.classify('I hated that movie, it was so bad'))
+    print("\nThe following are all review of the emoji movie.")
+    print(b.classify('If Im not dreaming, Ive just seen one of the boldest mainstream American movies in ages.'))
+    print(b.classify('One of the best movies Ive ever watched in my life. Great message, great character development, and an amazing soundtrack. I dont plan on letting my future children have a long screentime, but an exception would be this movie. 10/10 would recommend to anyone of all ages. #emojipop'))
+    print(b.classify('One wishes that this movie could be erased from existence - but for now, lets hope that the burning wreckage acts as a warning to never, ever do this again.'))
+    print(b.classify('I was shot three times in the chest and that was a more pleasurable experience than watching this movie'))
     pass
